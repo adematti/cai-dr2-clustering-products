@@ -27,8 +27,10 @@ def compute_jaxpower_mesh2_spectrum(output_fn, get_data, get_randoms, get_data_2
                                     get_shifted=None, cache=None, ells=(0, 2, 4), los='firstpoint', **attrs):
     import jax
     from jaxpower import (ParticleField, FKPField, compute_fkp2_normalization, compute_fkp2_shotnoise, BinMesh2SpectrumPoles, get_mesh_attrs, compute_mesh2_spectrum)
-     
+
+    t0 = time()
     data, randoms = get_data(), get_randoms()
+    logger.info(f'Loaded data and randoms in: {time() - t0:.2f}.')
     #data,randoms = get_data, get_randoms
     mattrs = get_mesh_attrs(data[0], randoms[0], check=True, **attrs)
     data = list(data)
