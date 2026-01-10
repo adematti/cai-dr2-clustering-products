@@ -1,4 +1,4 @@
-import os 
+import os
 import numpy as np
 from pathlib import Path
 
@@ -11,7 +11,7 @@ def load_footprint():
     from regressis import footprint
     footprint = footprint.DR9Footprint(256, mask_lmc=False, clear_south=True, mask_around_des=False, cut_desi=False)
     return footprint
-    
+
 def select_region(ra, dec, region=None):
     import healpy as hp
     # print('select', region)
@@ -75,7 +75,7 @@ def get_catalog_dir(survey='Y1', verspec='iron', version='v1.2', base_dir='/glob
 
 
 def get_catalog_fn(base_dir='/global/cfs/cdirs/desi/survey/catalogs', kind='data', tracer='LRG', weight_type='bitwise', zrange=(0.8, 1.1), region='NGC', nran=10, fmt='h5', **kwargs):
-    # if 'bitwise' in weight_type: is not implemented yet 
+    # if 'bitwise' in weight_type: is not implemented yet
     data_dir = Path(base_dir)
     if kind == 'data':
         return data_dir / f'{tracer}_{region}_clustering.dat.{fmt}'
@@ -97,13 +97,13 @@ def get_power_fn(base_dir=os.getenv('PSCRATCH'), kind='', file_type='h5', region
     base_dir = Path(base_dir)
     weight_type1=weight_type
     if tracer2: tracer += '_' + tracer2
-    if weight_type2!=weight_type: 
+    if weight_type2!=weight_type:
         weight_type += '_' + weight_type2
     # if rec_type: tracer += '_' + rec_type
     if region: tracer += '_' + region
     # if recon_dir != 'n':
     #     out_dir = out_dir[:-2] + recon_dir+'/pk/'
-        
+
     if option:
         zmax = str(zmax) + option
 
@@ -113,8 +113,8 @@ def get_power_fn(base_dir=os.getenv('PSCRATCH'), kind='', file_type='h5', region
         if nran is not None:
             root += '_nran{}'.format(nran)
         if cellsize is not None:
-            root += '_cellsize{}'.format(cellsize)   
-        if isinstance(boxsize, list): 
+            root += '_cellsize{}'.format(cellsize)
+        if isinstance(boxsize, list):
             root += '_boxsize{}_{}_{}'.format(int(boxsize[0]),int(boxsize[1]),int(boxsize[2]))
         else:
             root += '_boxsize{}'.format(int(boxsize))
@@ -130,7 +130,7 @@ def get_power_fn(base_dir=os.getenv('PSCRATCH'), kind='', file_type='h5', region
         ric = 'noric' if 'noric' in ric_dir else 'ric'
         root += '_{}'.format(ric)
     return base_dir / '{}_{}.{}'.format(kind, root, file_type)
-    
+
 # def get_catalog_fn(version='dr1-v1.5', kind='data', tracer='LRG', weight_type='bitwise', zrange=(0.8, 1.1), region='NGC', nran=10, **kwargs):
 #     desi_dir = Path('/dvs_ro/cfs/cdirs/desi/survey/catalogs/')
 #     nran_full = 1
@@ -191,6 +191,7 @@ def apply_wntmp(ntile, ntmp_table, method='ntmp'):
 # Create a lookup table for set bits per byte
 _popcount_lookuptable = np.array([bin(i).count('1') for i in range(256)], dtype=np.int32)
 
+
 def popcount(*arrays):
     """
     Return number of 1 bits in each value of input array.
@@ -213,7 +214,7 @@ def _compute_ntmp(bitweights, loc_assigned, ntile):
     recurr = popcount(*bitweights)
     wiip = (nbits + 1) / (recurr + 1)
     zero_prob = (recurr == 0) & (~loc_assigned)
-    
+
     #print(np.sum(zerop_msk))
     sum_ntile = np.bincount(ntile)
     sum_zero_prob = np.bincount(ntile, weights=zero_prob)
@@ -268,7 +269,7 @@ def get_clustering_rdzw(*fns, kind=None, zrange=None, region=None, tracer=None, 
                 mask = select_region(catalog['RA'], catalog['DEC'], region)
                 catalog = catalog[mask]
             catalogs[ifn] = (irank, catalog)
-    
+
     rdzw = []
     for irank, catalog in catalogs:
         if mpicomm.size > 1:
@@ -311,7 +312,7 @@ def get_full_rdw(*fns, kind='parent', zrange=None, region=None, tracer=None, wei
                 mask = select_region(catalog['RA'], catalog['DEC'], region)
                 catalog = catalog[mask]
             catalogs[ifn] = (irank, catalog)
-    
+
     rdzw = []
     for irank, catalog in catalogs:
         if mpicomm.size > 1:
@@ -409,7 +410,7 @@ def compute_fkp_effective_redshift(fkp, cellsize=10., order=2):
         znorm = compute_fkp_normalization(fkp, cellsize=cellsize, split=42)
     return znorm / norm
 
-    
+
 def combine_regions(output_fn, fns, logger=None):
     combined = types.sum([types.read(fn) for fn in fns])  # for the covariance matrix, assumes observables are independent
     if output_fn is not None:
