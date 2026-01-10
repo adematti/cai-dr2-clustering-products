@@ -3,7 +3,7 @@ modified version of https://github.com/cosmodesi/cai-mock-benchmark/blob/main/dr
 salloc -N 1 -C gpu -t 02:00:00 --gpus 4 --qos interactive --account desi_g
 salloc -N 1 -C "gpu&hbm80g" -t 02:00:00 --gpus 4 --qos interactive --account desi_g
 salloc -N 1 -C "gpu&hbm80g" -t 00:10:00 --gpus 4 --qos interactive --account desi_g
-source /global/common/software/desi/users/adematti/cosmodesi_environment.sh test
+source /global/common/software/desi/users/adematti/cosmodesi_environment.sh main
 srun -n 4 python jax-bkrun.py
 """
 
@@ -196,7 +196,7 @@ if __name__ == '__main__':
     boxsize  = args.boxsize
     cellsize = args.cellsize
     nran =  args.nran
-    input_fmt = 'fits'
+    input_fmt = 'h5'
 
     # We allow for cross-correlation 
     tracer = args.tracer[0]
