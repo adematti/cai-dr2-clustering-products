@@ -49,6 +49,6 @@ if __name__ == '__main__':
     os.environ['XLA_PYTHON_CLIENT_MEM_FRACTION'] = '0.9'
     jax.distributed.initialize()
     setup_logging()
-    check_boxsize(stats=['mesh2_spectrum'])
+    check_boxsize(stats=['mesh2_spectrum', 'mesh3_spectrum'])
     #check_nran(stats=['mesh2_spectrum', 'mesh3_spectrum'])
     jax.distributed.shutdown()

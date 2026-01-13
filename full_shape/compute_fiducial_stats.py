@@ -108,6 +108,7 @@ def compute_fiducial_stats_from_options(stats, cache=None,
                 sl = slice(sum(local_sizes_randoms[tracer]))
                 randoms_positions_weights[tracer] = [pw[sl] for pw in randoms_positions_weights[tracer]]
                 randoms_positions_weights_rec[tracer] = [pw[sl] for pw in randoms_positions_weights_rec[tracer]]
+                del jaxpower_particles
 
         # Compute angular upweights
         if any(kw.get('auw', False) for kw in kwargs.values()):
@@ -160,6 +161,7 @@ def compute_fiducial_stats_from_options(stats, cache=None,
             for stat, func in funcs.items():
                 if stat in stats:
                     spectrum_args = kwargs[stat]
+                    #spectrum = func(*[functools.partial(get_data, tracer) for tracer in tracers], mattrs=mattrs, cache=cache, **spectrum_args)
                     spectrum = func(*jaxpower_particles, cache=cache, **spectrum_args)
                     if not isinstance(spectrum, dict): spectrum = {'raw': spectrum}
                     for key, kw in _expand_cut_auw_options(stat, spectrum_args).items():

@@ -2,9 +2,9 @@
 # salloc -N 1 -C "gpu&hbm80g" -t 00:10:00 --gpus 4 --qos interactive --account desi_g
 # salloc -N 1 -C "gpu&hbm80g" -t 00:20:00 --gpus 4 --gpus-per-node=4 --qos interactive --account desi_g
 # source /global/common/software/desi/users/adematti/cosmodesi_environment.sh test
-# bash run_test_boxsize.sh QSO 451
-# bash run_test_boxsize.sh LRG 451
-# bash run_test_boxsize.sh ELG_LOPnotqso 451
+# bash check_boxsize.sh QSO 451
+# bash check_boxsize.sh LRG 451
+# bash check_boxsize.sh ELG_LOPnotqso 451
 
 set -e
 source /global/common/software/desi/users/adematti/cosmodesi_environment.sh main

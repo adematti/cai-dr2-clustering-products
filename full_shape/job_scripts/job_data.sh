@@ -2,7 +2,7 @@
 # salloc -N 1 -C gpu -t 00:10:00 --gpus 4 --qos interactive --account desi_g
 # salloc -N 1 -C "gpu&hbm80g" -t 00:10:00 --gpus 4 --qos interactive --account desi_g
 # source /global/common/software/desi/users/adematti/cosmodesi_environment.sh test
-# bash run_test.sh
+# bash job_data.sh
 
 set -e
 source /global/common/software/desi/users/adematti/cosmodesi_environment.sh main
